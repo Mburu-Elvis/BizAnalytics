@@ -15,10 +15,6 @@ public class DatabaseIngestor {
     public ResponseEntity<?> connectDB() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
-        }
-        try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db?useSSL=false", "usr", "pwd");
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select * from tbl_patient");
@@ -27,7 +23,7 @@ public class DatabaseIngestor {
             }
             rs.close();
             con.close();
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException  | SQLException ex) {
             throw new RuntimeException(ex);
         }
 
